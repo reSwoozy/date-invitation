@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/confetti-C5QCIC4C.js","assets/rolldown-runtime-Cyuzqnbw.js"])))=>i.map(i=>d[i]);
-import{f as e}from"./index-DODMEQs2.js";var t=null;function n(){return t||=e(()=>import(`./confetti-C5QCIC4C.js`).then(e=>e.t).then(e=>e.default),__vite__mapDeps([0,1])),t}export{n as t};
