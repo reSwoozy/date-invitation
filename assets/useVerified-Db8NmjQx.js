@@ -1,1 +1,0 @@
-import{a as e}from"./rolldown-runtime-Cyuzqnbw.js";import{i as t}from"./calendar-BwycAL-L.js";import{a as n,i as r,o as i,s as a}from"./index-CRMERrhE.js";var o=e(t(),1);function s(){return{isVerified:i(),guestName:n(),setVerified:(0,o.useCallback)(e=>{a(e)},[]),clearVerified:(0,o.useCallback)(()=>{r()},[])}}export{s as t};
