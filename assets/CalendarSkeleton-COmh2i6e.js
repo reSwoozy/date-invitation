@@ -1,0 +1,1 @@
+import{r as e}from"./motion-qiczUK3J.js";var t=e();function n(){return(0,t.jsxs)(`div`,{className:`date-picker date-picker-skeleton`,"aria-hidden":`true`,children:[(0,t.jsx)(`div`,{className:`skeleton-line skeleton-line-short`}),(0,t.jsx)(`div`,{className:`skeleton-calendar`})]})}export{n as t};
