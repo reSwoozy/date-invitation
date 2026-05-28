@@ -1,0 +1,50 @@
+{
+  "gate": {
+    "title": "Even checken… ben jij het?",
+    "hint": "Typ hieronder je naam",
+    "placeholder": "Jouw naam",
+    "submit": "Binnen komen",
+    "error": "Hmm, die naam ken ik niet. Ben jij wel de juiste persoon? 💭",
+    "loading": "Even geduld…",
+    "configError": "Oeps, de uitnodiging is nog niet klaar. Probeer later opnieuw."
+  },
+  "ask": {
+    "question": "Wil je met me op date?",
+    "yes": "Ja!",
+    "no": "Nee"
+  },
+  "celebrate": {
+    "message": "Ik wist dat je ja zou zeggen!",
+    "continue": "Verder →"
+  },
+  "plan": {
+    "cityTitle": "Waar zullen we afspreken?",
+    "pickDate": "Kies een datum",
+    "dateSelected": "Gekozen: {{date}}",
+    "activityTitle": "Wat gaan we doen?",
+    "confirm": "Bevestigen",
+    "saving": "Bezig met boeken…",
+    "saveError": "Kon je keuze niet opslaan. Vraag de afzender om de Firestore-regels bij te werken (zie README).",
+    "surprise": "Verrassing!",
+    "surpriseSpinning": "Even kijken…",
+    "surpriseResult": "Het wordt: {{activity}}!",
+    "dateBlocked": "Die dag ben ik helaas bezet — kies een andere dag.",
+    "pickDateFirst": "Kies eerst een datum",
+    "calendarLegend": "Doorgestreept = die dag ben ik niet vrij"
+  },
+  "done": {
+    "message": "Date geboekt op {{date}} in {{city}}. Ik kan niet wachten! :)",
+    "activityLine": "We gaan: {{activity}}",
+    "addToCalendar": "Zet in je agenda",
+    "googleCalendar": "Google Agenda",
+    "appleCalendar": "Apple / .ics bestand",
+    "outlookCalendar": "Outlook",
+    "calendarHint": "Het .ics-bestand werkt ook in Apple Agenda en de meeste andere apps.",
+    "calendarTitle": "Date in {{city}}",
+    "calendarDescription": "Plan: {{activity}}. Geboekt via Date Invitation."
+  },
+  "layout": {
+    "langNl": "NL",
+    "langEn": "EN"
+  }
+}

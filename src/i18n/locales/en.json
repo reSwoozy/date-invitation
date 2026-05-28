@@ -1,0 +1,50 @@
+{
+  "gate": {
+    "title": "Quick check… is that really you?",
+    "hint": "Enter your name below",
+    "placeholder": "Your name",
+    "submit": "Come in",
+    "error": "Hmm, I don't know that name. Are you the right person? 💭",
+    "loading": "One moment…",
+    "configError": "Oops, the invitation isn't ready yet. Try again later."
+  },
+  "ask": {
+    "question": "Would you like to go on a date with me?",
+    "yes": "Yes!",
+    "no": "No"
+  },
+  "celebrate": {
+    "message": "I knew you'd say yes!",
+    "continue": "Continue →"
+  },
+  "plan": {
+    "cityTitle": "Where shall we meet?",
+    "pickDate": "Pick a date",
+    "dateSelected": "Selected: {{date}}",
+    "activityTitle": "What shall we do?",
+    "confirm": "Confirm",
+    "saving": "Booking…",
+    "saveError": "Could not save your choice. Ask the sender to update Firestore rules (see README).",
+    "surprise": "Surprise me!",
+    "surpriseSpinning": "Picking for you…",
+    "surpriseResult": "It's {{activity}}!",
+    "dateBlocked": "I'm busy that day — please pick another.",
+    "pickDateFirst": "Pick a date first",
+    "calendarLegend": "Crossed out = I'm busy that day"
+  },
+  "done": {
+    "message": "Date booked for {{date}} in {{city}}. Can't wait to see you! :)",
+    "activityLine": "Plan: {{activity}}",
+    "addToCalendar": "Add to your calendar",
+    "googleCalendar": "Google Calendar",
+    "appleCalendar": "Apple / .ics file",
+    "outlookCalendar": "Outlook",
+    "calendarHint": "The .ics file also works in Apple Calendar and most other apps.",
+    "calendarTitle": "Date in {{city}}",
+    "calendarDescription": "Plan: {{activity}}. Booked via Date Invitation."
+  },
+  "layout": {
+    "langNl": "NL",
+    "langEn": "EN"
+  }
+}
