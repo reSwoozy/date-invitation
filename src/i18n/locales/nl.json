@@ -44,6 +44,11 @@
     "calendarTitle": "Date in {{city}}",
     "calendarDescription": "Plan: {{activity}}. Geboekt via Date Invitation."
   },
+  "booked": {
+    "message": "Je date staat al gepland op {{date}} in {{city}}.",
+    "activityLine": "We gaan: {{activity}}",
+    "changePlans": "Wijzig plannen"
+  },
   "layout": {
     "langNl": "NL",
     "langEn": "EN"

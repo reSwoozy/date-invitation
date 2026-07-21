@@ -53,9 +53,13 @@ export async function saveBooking(booking: BookingData): Promise<void> {
     throw new Error('Firebase is not configured')
   }
 
-  // Always overwrites the single booking/current document (no duplicate records)
+  const nameKey = bookingNameKey(booking.guestName)
+  if (!nameKey) {
+    throw new Error('Guest name is required')
+  }
+
   await setDoc(
-    doc(firestore, 'booking', 'current'),
+    doc(firestore, 'booking', nameKey),
     {
       ...booking,
       updatedAt: serverTimestamp(),
@@ -64,6 +68,40 @@ export async function saveBooking(booking: BookingData): Promise<void> {
   )
 }
 
+function parseBooking(data: Record<string, unknown>): BookingData | null {
+  const guestName = String(data.guestName ?? '').trim()
+  const city = String(data.city ?? '').trim()
+  const date = String(data.date ?? '').trim()
+  const activity = String(data.activity ?? '').trim()
+  const locale = String(data.locale ?? '').trim()
+
+  if (!guestName || !city || !date || !activity) return null
+  if (date.length !== 10) return null
+  if (locale !== 'nl' && locale !== 'en') return null
+
+  return { guestName, city, date, activity, locale }
+}
+
+/** Firestore doc id for a guest booking (must match security rules). */
+export function bookingNameKey(name: string): string {
+  return name.trim().toLowerCase()
+}
+
+export async function fetchBooking(
+  guestName: string,
+): Promise<BookingData | null> {
+  const firestore = getDb()
+  if (!firestore) return null
+
+  const nameKey = bookingNameKey(guestName)
+  if (!nameKey) return null
+
+  const snap = await getDoc(doc(firestore, 'booking', nameKey))
+  if (!snap.exists()) return null
+
+  return parseBooking(snap.data() as Record<string, unknown>)
+}
+
 export function namesMatch(entered: string, expected: string): boolean {
-  return entered.trim().toLowerCase() === expected.trim().toLowerCase()
+  return bookingNameKey(entered) === bookingNameKey(expected)
 }

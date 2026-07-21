@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { namesMatch } from '../firebase'
+import { fetchBooking, namesMatch } from '../firebase'
 import { useBooking } from '../context/BookingContext'
 import { useSettings } from '../hooks/useSettings'
 import { useVerified } from '../hooks/useVerified'
@@ -13,24 +13,40 @@ export function GatePage() {
   const navigate = useNavigate()
   const { settings, loading, error: settingsError } = useSettings()
   const { setVerified } = useVerified()
-  const { setGuestName } = useBooking()
+  const { setGuestName, applyBooking } = useBooking()
   const [name, setName] = useState('')
   const [error, setError] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (!settings || !name.trim()) return
+    if (!settings || !name.trim() || submitting) return
 
     setSubmitting(true)
-    if (namesMatch(name, settings.expectedName)) {
-      setVerified(name.trim())
-      setGuestName(name.trim())
-      navigate('/ask')
-    } else {
+    setError(false)
+
+    if (!namesMatch(name, settings.expectedName)) {
       setError(true)
       setSubmitting(false)
+      return
     }
+
+    const guestName = name.trim()
+    setVerified(guestName)
+    setGuestName(guestName)
+
+    try {
+      const existing = await fetchBooking(guestName)
+      if (existing && namesMatch(guestName, existing.guestName)) {
+        applyBooking(existing)
+        navigate('/booked', { replace: true })
+        return
+      }
+    } catch (err) {
+      console.warn('fetchBooking failed:', err)
+    }
+
+    navigate('/ask')
   }
 
   if (loading) {
@@ -57,7 +73,7 @@ export function GatePage() {
     >
       <h1 className="title-script">{t('gate.title')}</h1>
       <p className="gate-hint">{t('gate.hint')}</p>
-      <form className="gate-form" onSubmit={handleSubmit}>
+      <form className="gate-form" onSubmit={(e) => void handleSubmit(e)}>
         <input
           type="text"
           className="input-text"
@@ -76,7 +92,7 @@ export function GatePage() {
           className="btn btn-primary"
           disabled={submitting || !name.trim()}
         >
-          {t('gate.submit')}
+          {submitting ? t('gate.loading') : t('gate.submit')}
         </button>
       </form>
     </motion.div>

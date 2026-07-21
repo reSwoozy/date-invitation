@@ -19,6 +19,9 @@ const PlanPage = lazy(() =>
 const DonePage = lazy(() =>
   import('./pages/DonePage').then((m) => ({ default: m.DonePage })),
 )
+const BookedPage = lazy(() =>
+  import('./pages/BookedPage').then((m) => ({ default: m.BookedPage })),
+)
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || undefined
 
@@ -72,6 +75,14 @@ export const router = createBrowserRouter(
               element: (
                 <LazyPage>
                   <DonePage />
+                </LazyPage>
+              ),
+            },
+            {
+              path: 'booked',
+              element: (
+                <LazyPage>
+                  <BookedPage />
                 </LazyPage>
               ),
             },

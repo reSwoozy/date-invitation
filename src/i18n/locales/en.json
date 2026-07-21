@@ -44,6 +44,11 @@
     "calendarTitle": "Date in {{city}}",
     "calendarDescription": "Plan: {{activity}}. Booked via Date Invitation."
   },
+  "booked": {
+    "message": "Your date is already set for {{date}} in {{city}}.",
+    "activityLine": "Plan: {{activity}}",
+    "changePlans": "Change plans"
+  },
   "layout": {
     "langNl": "NL",
     "langEn": "EN"

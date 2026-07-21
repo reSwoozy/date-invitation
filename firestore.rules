@@ -1,16 +1,15 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /settings/main {
-      allow read: if true;
-      allow write: if false;
+    function expectedNameKey() {
+      return get(/databases/$(database)/documents/settings/main).data.expectedName.lower();
     }
-    match /booking/current {
-      allow read: if false;
-      allow write: if
-        request.resource.data.guestName is string
+
+    function validBookingFields() {
+      return request.resource.data.guestName is string
         && request.resource.data.guestName.size() > 0
         && request.resource.data.guestName.size() < 100
+        && request.resource.data.guestName.lower() == expectedNameKey()
         && request.resource.data.city is string
         && request.resource.data.city.size() > 0
         && request.resource.data.city.size() < 64
@@ -20,6 +19,22 @@ service cloud.firestore {
         && request.resource.data.date is string
         && request.resource.data.date.size() == 10
         && request.resource.data.locale in ['nl', 'en'];
+    }
+
+    match /settings/main {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Doc id must be the invited name (lowercased). List is denied —
+    // without the correct name you cannot discover or read a booking.
+    match /booking/{nameKey} {
+      allow get: if nameKey == expectedNameKey();
+      allow list: if false;
+      allow create, update: if nameKey == expectedNameKey()
+        && nameKey == request.resource.data.guestName.lower()
+        && validBookingFields();
+      allow delete: if false;
     }
   }
 }

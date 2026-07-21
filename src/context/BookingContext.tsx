@@ -15,6 +15,7 @@ interface BookingContextValue {
   setDate: (date: string) => void
   setActivity: (activity: string) => void
   setGuestName: (name: string) => void
+  applyBooking: (data: BookingData) => void
   isComplete: boolean
 }
 
@@ -30,6 +31,12 @@ export function BookingProvider({ children }: { children: ReactNode }) {
   const setDate = useCallback((d: string) => setDateState(d), [])
   const setActivity = useCallback((a: string) => setActivityState(a), [])
   const setGuestName = useCallback((n: string) => setGuestNameState(n), [])
+  const applyBooking = useCallback((data: BookingData) => {
+    setGuestNameState(data.guestName)
+    setCityState(data.city)
+    setDateState(data.date)
+    setActivityState(data.activity)
+  }, [])
 
   const isComplete = Boolean(city && date && activity)
 
@@ -50,9 +57,18 @@ export function BookingProvider({ children }: { children: ReactNode }) {
       setDate,
       setActivity,
       setGuestName,
+      applyBooking,
       isComplete,
     }),
-    [booking, setCity, setDate, setActivity, setGuestName, isComplete],
+    [
+      booking,
+      setCity,
+      setDate,
+      setActivity,
+      setGuestName,
+      applyBooking,
+      isComplete,
+    ],
   )
 
   return (

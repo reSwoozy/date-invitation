@@ -292,6 +292,20 @@ body {
   cursor: not-allowed;
 }
 
+.btn-secondary {
+  background: transparent;
+  color: var(--pink-deep);
+  border: 2px solid var(--pink-soft);
+  padding: 0.85rem 1.75rem;
+  box-shadow: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 182, 193, 0.25);
+  border-color: var(--pink-deep);
+  transform: translateY(-2px);
+}
+
 .btn-large {
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
@@ -744,7 +758,16 @@ body {
   padding: var(--space-sm) 0;
 }
 
-.page-done > * {
+.page-booked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  padding: var(--space-sm) 0;
+}
+
+.page-done > *,
+.page-booked > * {
   margin: 0;
 }
 
