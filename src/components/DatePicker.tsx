@@ -6,6 +6,7 @@ import { CalendarSkeleton } from './CalendarSkeleton'
 import {
   formatDateForDisplay,
   isDayDisabled,
+  isWeekday,
   parseIsoDate,
   startOfToday,
   toIsoDate,
@@ -101,6 +102,11 @@ export function DatePicker({
           {t('plan.dateSelected', {
             date: formatDateForDisplay(date, displayLocale),
           })}
+        </p>
+      )}
+      {date && isWeekday(date) && (
+        <p className="date-picker-weekday-note" role="status">
+          {t('plan.weekdayWorkNote')}
         </p>
       )}
       <p className="date-picker-legend">{t('plan.calendarLegend')}</p>

@@ -37,6 +37,12 @@ export function isDateInPast(date: string): boolean {
   return date < todayIso()
 }
 
+/** Monday–Friday (local calendar day). */
+export function isWeekday(iso: string): boolean {
+  const day = parseIsoDate(iso).getDay()
+  return day >= 1 && day <= 5
+}
+
 const MONTHS_RU_GENITIVE = [
   'Января',
   'Февраля',

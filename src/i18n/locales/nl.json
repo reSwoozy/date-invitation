@@ -29,6 +29,7 @@
     "surpriseSpinning": "Even kijken…",
     "surpriseResult": "Het wordt: {{activity}}!",
     "dateBlocked": "Die dag ben ik helaas bezet — kies een andere dag.",
+    "weekdayWorkNote": "Op weekdagen werk ik tot 18:00 — we spreken daarna af.",
     "pickDateFirst": "Kies eerst een datum",
     "calendarLegend": "Doorgestreept = die dag ben ik niet vrij"
   },

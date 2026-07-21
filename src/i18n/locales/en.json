@@ -29,6 +29,7 @@
     "surpriseSpinning": "Picking for you…",
     "surpriseResult": "It's {{activity}}!",
     "dateBlocked": "I'm busy that day — please pick another.",
+    "weekdayWorkNote": "On weekdays I work until 6 PM — we'll meet after that.",
     "pickDateFirst": "Pick a date first",
     "calendarLegend": "Crossed out = I'm busy that day"
   },
