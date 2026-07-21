@@ -34,13 +34,25 @@ export async function notifyTelegram(
     `План: ${activityLabel}`,
   ].join('\n')
 
+  const payload: { text: string; secret?: string } = { text }
+  const secret = import.meta.env.VITE_TELEGRAM_WEBHOOK_SECRET
+  if (secret) payload.secret = secret
+
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ text }),
+    body: JSON.stringify(payload),
   })
 
-  if (!response.ok) {
-    throw new Error(`Telegram webhook failed: ${response.status}`)
+  let result: { ok?: boolean; error?: string } | null = null
+  try {
+    result = (await response.json()) as { ok?: boolean; error?: string }
+  } catch {
+    /* non-JSON body */
+  }
+
+  if (!response.ok || result?.ok === false) {
+    const detail = result?.error ?? String(response.status)
+    throw new Error(`Telegram webhook failed: ${detail}`)
   }
 }
