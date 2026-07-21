@@ -24,3 +24,5 @@ export interface AppSettings {
 
 export const VERIFIED_KEY = 'dateInviteVerified'
 export const GUEST_NAME_KEY = 'dateInviteGuestName'
+/** sessionStorage: pending Telegram notify after confirm (consumed on /done) */
+export const PENDING_TELEGRAM_KEY = 'dateInvitePendingTelegram'

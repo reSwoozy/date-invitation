@@ -6,8 +6,10 @@ import { AddToCalendar } from '../components/AddToCalendar'
 import { loadConfetti } from '../utils/loadConfetti'
 import { useBooking } from '../context/BookingContext'
 import { useSettings } from '../hooks/useSettings'
+import { PENDING_TELEGRAM_KEY, type BookingData } from '../types'
 import { formatDateForDisplay } from '../utils/dates'
 import { findOptionLabel } from '../utils/labels'
+import { canNotifyTelegram, notifyTelegram } from '../utils/notifyTelegram'
 import { findCityActivityLabel } from '../utils/settingsHelpers'
 
 export function DonePage() {
@@ -60,6 +62,28 @@ export function DonePage() {
       cancelAnimationFrame(raf)
     }
   }, [isComplete, navigate])
+
+  useEffect(() => {
+    if (!isComplete || !settings || !canNotifyTelegram()) return
+
+    const raw = sessionStorage.getItem(PENDING_TELEGRAM_KEY)
+    if (!raw) return
+    // Remove synchronously so React Strict Mode remount does not double-send
+    sessionStorage.removeItem(PENDING_TELEGRAM_KEY)
+
+    let pending: { booking: BookingData; isUpdate?: boolean }
+    try {
+      pending = JSON.parse(raw) as { booking: BookingData; isUpdate?: boolean }
+    } catch {
+      return
+    }
+
+    void notifyTelegram(pending.booking, settings, {
+      isUpdate: Boolean(pending.isUpdate),
+    }).catch((err) => {
+      console.warn('Telegram notify failed:', err)
+    })
+  }, [isComplete, settings])
 
   const { city, date, activity, guestName } = booking
   if (!isComplete || !city || !date || !activity || !settings) {

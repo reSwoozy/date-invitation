@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CalendarSkeleton } from '../components/CalendarSkeleton'
-import { saveBooking } from '../firebase'
+import { fetchBooking, saveBooking } from '../firebase'
 import { useBooking } from '../context/BookingContext'
 import { useSettings } from '../hooks/useSettings'
 import { useVerified } from '../hooks/useVerified'
+import { PENDING_TELEGRAM_KEY } from '../types'
 import { isDateBlocked } from '../utils/dates'
 import { findOptionLabel, optionLabel } from '../utils/labels'
 import { isSettingsReady } from '../utils/parseSettings'
 import { getCityActivities } from '../utils/settingsHelpers'
-import { canNotifyTelegram, notifyTelegram } from '../utils/notifyTelegram'
+import { canNotifyTelegram } from '../utils/notifyTelegram'
 import { runSurprisePick } from '../utils/surpriseActivity'
 
 const LazyDatePicker = lazy(() =>
@@ -136,14 +137,20 @@ export function PlanPage() {
         locale,
       }
 
+      let isUpdate = false
+      try {
+        isUpdate = Boolean(await fetchBooking(bookingData.guestName))
+      } catch {
+        /* treat as create if we cannot read existing */
+      }
+
       await saveBooking(bookingData)
 
       if (canNotifyTelegram()) {
-        try {
-          await notifyTelegram(bookingData, settings)
-        } catch (notifyErr) {
-          console.warn('Telegram notify failed:', notifyErr)
-        }
+        sessionStorage.setItem(
+          PENDING_TELEGRAM_KEY,
+          JSON.stringify({ booking: bookingData, isUpdate }),
+        )
       }
 
       navigate('/done')

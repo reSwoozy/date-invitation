@@ -1,9 +1,7 @@
 import type { AppSettings, BookingData } from '../types'
 import { findOption, optionLabelRu } from './labels'
 import { formatDateForTelegram } from './dates'
-import {
-  findCityActivityLabelRu,
-} from './settingsHelpers'
+import { findCityActivityLabelRu } from './settingsHelpers'
 
 export function canNotifyTelegram(): boolean {
   return Boolean(import.meta.env.VITE_TELEGRAM_WEBHOOK_URL)
@@ -12,6 +10,7 @@ export function canNotifyTelegram(): boolean {
 export async function notifyTelegram(
   booking: BookingData,
   settings: AppSettings,
+  options?: { isUpdate?: boolean },
 ): Promise<void> {
   const url = import.meta.env.VITE_TELEGRAM_WEBHOOK_URL
   if (!url) return
@@ -24,9 +23,12 @@ export async function notifyTelegram(
     booking.activity,
   )
   const dateLabel = formatDateForTelegram(booking.date)
+  const headline = options?.isUpdate
+    ? '✏️ План свидания обновлён!'
+    : '💕 Приглашение на свидание принято! 💕'
 
   const text = [
-    '💕 Приглашение на свидание принято! 💕',
+    headline,
     '',
     `Гость: ${booking.guestName}`,
     `Город: ${cityLabel}`,
@@ -42,6 +44,7 @@ export async function notifyTelegram(
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload),
+    redirect: 'follow',
   })
 
   let result: { ok?: boolean; error?: string } | null = null
